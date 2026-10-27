@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rim Benamar – Data &amp; IA</title>
+<meta name="description" content="Portfolio de Rim Benamar, élève ingénieure en IA et Data Science à l'ENSAM Rabat : systèmes multi-agents, RAG, data engineering, vision par ordinateur.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F6F8FB;
+    --surface: #FFFFFF;
+    --ink: #0B2C55;
+    --text: #22303F;
+    --muted: #5B6878;
+    --line: #DCE2EA;
+    --signal: #1F7A6A;
+    --alert: #C2410C;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0E1621; --surface: #142030; --ink: #CFE0F7; --text: #D7DEE7;
+      --muted: #94A3B5; --line: #24344A; --signal: #4CC2AA; --alert: #F59E5B;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0E1621; --surface: #142030; --ink: #CFE0F7; --text: #D7DEE7;
+    --muted: #94A3B5; --line: #24344A; --signal: #4CC2AA; --alert: #F59E5B;
+  }
+
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--paper); color: var(--text);
+    font: 400 17px/1.6 "IBM Plex Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--signal); }
+  :focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 2px; }
+  h1, h2, h3 { font-family: "Bricolage Grotesque", sans-serif; color: var(--ink); margin: 0; font-weight: 700; }
+
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- nav ---------- */
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; font-size: 15px; }
+  nav .me { font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; color: var(--ink); text-decoration: none; font-size: 18px; }
+  nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+  nav ul a { text-decoration: none; color: var(--muted); }
+  nav ul a:hover { color: var(--ink); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 56px 0 24px; }
+  .hero h1 { font-size: clamp(44px, 8vw, 84px); line-height: 0.98; letter-spacing: -0.02em; }
+  .hero p.lead { font-size: clamp(18px, 2.2vw, 21px); max-width: 640px; margin: 22px 0 0; color: var(--text); }
+  .hero .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .btn {
+    display: inline-block; padding: 11px 18px; border-radius: 8px; font-weight: 500; font-size: 15px;
+    text-decoration: none; border: 1px solid var(--ink);
+  }
+  .btn.primary { background: var(--ink); color: var(--paper); }
+  .btn.primary:hover { background: var(--signal); border-color: var(--signal); color: #fff; }
+  .btn.ghost { color: var(--ink); }
+  .btn.ghost:hover { border-color: var(--signal); }
+
+  /* the signal: a metric line with one anomaly, the thread through her work */
+  .signal { margin: 48px 0 8px; }
+  .signal svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .signal .base { fill: none; stroke: var(--muted); stroke-width: 1.6; opacity: .55; }
+  .signal .spike { fill: none; stroke: var(--alert); stroke-width: 2.2; }
+  .signal .dot { fill: var(--alert); }
+  .signal .ring { fill: none; stroke: var(--alert); stroke-width: 1.2; opacity: .5; }
+  .signal text { fill: var(--muted); font: 500 13px "IBM Plex Sans", sans-serif; }
+  .signal .draw { stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: draw 2.2s ease-out .2s forwards; }
+  .signal .late { opacity: 0; animation: show .5s ease-out 2.2s forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes show { to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    .signal .draw { animation: none; stroke-dashoffset: 0; }
+    .signal .late { animation: none; opacity: 1; }
+  }
+  .caption { font-size: 14px; color: var(--muted); margin: 0; max-width: 620px; }
+
+  /* ---------- sections ---------- */
+  section { padding: 64px 0 8px; }
+  section > h2 { font-size: 30px; margin-bottom: 8px; }
+  section > p.intro { color: var(--muted); margin: 0 0 28px; max-width: 620px; }
+
+  /* featured project */
+  .feature {
+    background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--signal);
+    border-radius: 10px; padding: 30px 30px 26px;
+  }
+  .feature h3 { font-size: 28px; line-height: 1.15; }
+  .feature .sub { color: var(--muted); margin: 6px 0 18px; }
+  .feature p { margin: 0 0 14px; max-width: 70ch; }
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 22px 0 20px; }
+  .flow div {
+    font-size: 13.5px; line-height: 1.35; padding: 10px 10px; border-radius: 8px;
+    background: var(--paper); border: 1px solid var(--line); position: relative;
+  }
+  .flow div b { display: block; color: var(--ink); font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+  .flow div.human { border-color: var(--signal); }
+  .flow div:not(:last-child)::after {
+    content: ""; position: absolute; right: -7px; top: 50%; width: 6px; height: 1.5px; background: var(--muted);
+  }
+  .stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .stack li { font-size: 13px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+
+  /* project rows */
+  .group { margin-top: 44px; }
+  .group h3.g { font-size: 19px; color: var(--muted); font-weight: 500; margin-bottom: 4px; }
+  .row {
+    display: grid; grid-template-columns: 1fr 230px; gap: 8px 32px;
+    padding: 20px 0; border-bottom: 1px solid var(--line);
+  }
+  .row h4 { margin: 0 0 4px; font: 600 18px/1.35 "IBM Plex Sans", sans-serif; color: var(--ink); }
+  .row p { margin: 0; color: var(--text); }
+  .row .stack { align-content: flex-start; justify-content: flex-end; }
+
+  /* experience */
+  .xp { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--line); }
+  .xp li { position: relative; padding: 0 0 30px 26px; }
+  .xp li::before {
+    content: ""; position: absolute; left: -7px; top: 7px; width: 12px; height: 12px; border-radius: 50%;
+    background: var(--paper); border: 2px solid var(--ink);
+  }
+  .xp .when { font-size: 14px; color: var(--muted); }
+  .xp h4 { margin: 2px 0 4px; font: 600 18px/1.35 "IBM Plex Sans", sans-serif; color: var(--ink); }
+  .xp p { margin: 0; max-width: 68ch; }
+
+  /* skills */
+  .skills { display: grid; grid-template-columns: 180px 1fr; gap: 12px 28px; margin: 0; }
+  .skills dt { font-weight: 600; color: var(--ink); }
+  .skills dd { margin: 0; color: var(--text); }
+
+  /* about */
+  .about { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: start; }
+  .about p { margin: 0 0 14px; }
+  .facts { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; font-size: 15px; }
+  .facts p { margin: 0 0 10px; }
+  .facts p:last-child { margin: 0; }
+  .facts b { color: var(--ink); font-weight: 600; }
+
+  /* contact */
+  .contact { padding: 72px 0 40px; }
+  .contact h2 { font-size: clamp(32px, 5vw, 48px); line-height: 1.05; margin-bottom: 14px; }
+  .contact p { max-width: 600px; margin: 0 0 24px; }
+  footer { border-top: 1px solid var(--line); padding: 22px 0 36px; font-size: 14px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .theme { background: none; border: 1px solid var(--line); color: var(--muted); border-radius: 6px; padding: 4px 10px; font: inherit; cursor: pointer; }
+
+  @media (max-width: 760px) {
+    body { font-size: 16px; }
+    .wrap { padding: 0 16px; }
+    nav ul { display: none; }
+    .flow { grid-template-columns: 1fr; }
+    .flow div:not(:last-child)::after { right: auto; left: 50%; top: auto; bottom: -7px; width: 1.5px; height: 6px; }
+    .row { grid-template-columns: 1fr; }
+    .row .stack { justify-content: flex-start; }
+    .skills { grid-template-columns: 1fr; gap: 2px; }
+    .skills dd { margin-bottom: 12px; }
+    .about { grid-template-columns: 1fr; gap: 24px; }
+    .feature { padding: 22px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav aria-label="Navigation principale">
+    <a class="me" href="#">Rim Benamar</a>
+    <ul>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#parcours">Parcours</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <h1>Rim Benamar</h1>
+    <p class="lead">Élève ingénieure en IA et Data Science à l'ENSAM Rabat. Je construis des systèmes qui trouvent ce qui cloche dans les données, et des agents IA qui aident les équipes à décider, sans décider à leur place.</p>
+    <div class="actions">
+      <a class="btn primary" href="benamar_rim_cv.pdf" download>Télécharger mon CV</a>
+      <a class="btn ghost" href="#projets">Voir mes projets</a>
+    </div>
+
+    <figure class="signal" aria-label="Une courbe de métrique stable, avec une anomalie détectée">
+      <svg viewBox="0 0 880 150" role="img">
+        <path class="base draw" d="M0 104 L40 100 L80 106 L120 98 L160 103 L200 99 L240 105 L280 101 L320 104 L360 97 L400 102 L440 100 L480 104"/>
+        <path class="spike draw" d="M480 104 L510 96 L530 30 L548 112 L570 98"/>
+        <path class="base draw" d="M570 98 L610 103 L650 99 L690 104 L730 100 L770 102 L810 99 L850 103 L880 101"/>
+        <circle class="ring late" cx="530" cy="30" r="13"/>
+        <circle class="dot late" cx="530" cy="30" r="4.5"/>
+        <text class="late" x="550" y="26">anomalie détectée</text>
+      </svg>
+      <figcaption class="caption">Le fil rouge de mon parcours : repérer l'anomalie, comprendre sa cause, puis aider à la corriger. Dans des données d'assurance, dans du trafic réseau, ou dans une plateforme en production.</figcaption>
+    </figure>
+  </header>
+
+  <!-- ===================== PROJETS ===================== -->
+  <section id="projets" aria-labelledby="t-projets">
+    <h2 id="t-projets">Projets</h2>
+    <p class="intro">Une sélection, de l'IA générative au réseau, en passant par la vision par ordinateur.</p>
+
+    <article class="feature">
+      <h3>IncidentMind</h3>
+      <p class="sub">Système multi-agents d'analyse d'incidents de production</p>
+      <p>Quand une alerte se déclenche en production, la cause est rarement là où le symptôme apparaît. IncidentMind mène l'enquête comme un ingénieur d'astreinte : sept agents IA analysent en parallèle les métriques, les logs et les déploiements récents, remontent le graphe de dépendances jusqu'au vrai coupable, puis proposent un correctif qu'un humain doit valider avant toute action.</p>
+      <p>Le projet comprend une plateforme e-commerce simulée avec injection de pannes, dont des déploiements « leurres » qui piègent un diagnostic naïf, et une campagne d'évaluation suivie dans MLflow.</p>
+
+      <div class="flow" aria-label="Déroulé d'une enquête">
+        <div><b>Triage</b>qualifie l'alerte</div>
+        <div><b>Enquête</b>logs, métriques et déploiements en parallèle</div>
+        <div><b>Cause racine</b>raisonnement sur les dépendances</div>
+        <div><b>Runbooks</b>RAG hybride sur les procédures</div>
+        <div class="human"><b>Validation</b>un humain approuve le correctif</div>
+      </div>
+
+      <ul class="stack" aria-label="Technologies">
+        <li>Python</li><li>LangGraph</li><li>RAG hybride</li><li>Qdrant</li><li>FastAPI</li><li>MCP</li><li>MLflow</li><li>Streamlit</li><li>Docker</li>
+      </ul>
+    </article>
+
+    <div class="group">
+      <h3 class="g">IA générative et agents</h3>
+      <div class="row">
+        <div>
+          <h4>Agent IA d'aide à la décision multicritère</h4>
+          <p>Un agent qui sélectionne des prestataires selon plusieurs critères : scoring pondéré, analyse NLP des offres et recommandations argumentées rédigées par un LLM.</p>
+        </div>
+        <ul class="stack"><li>Python</li><li>NLP</li><li>LLM</li><li>API REST</li></ul>
+      </div>
+      <div class="row">
+        <div>
+          <h4>SourceSûre</h4>
+          <p>Un assistant qui répond aux questions des étudiants à partir du règlement de l'école, en citant systématiquement l'article utilisé.</p>
+        </div>
+        <ul class="stack"><li>RAG</li><li>Ollama</li><li>Flask</li><li>Docker</li></ul>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3 class="g">Machine learning et vision</h3>
+      <div class="row">
+        <div>
+          <h4>Détection et prévention d'intrusions (IDS/IPS)</h4>
+          <p>Évaluation d'un modèle d'ensemble hybride qui repère les comportements anormaux dans le trafic réseau.</p>
+        </div>
+        <ul class="stack"><li>Python</li><li>Scikit-learn</li></ul>
+      </div>
+      <div class="row">
+        <div>
+          <h4>Deep learning pour la vision</h4>
+          <p>Classification d'images, détection d'objets et segmentation au pixel : préparation des jeux de données, entraînement et évaluation des modèles.</p>
+        </div>
+        <ul class="stack"><li>Python</li><li>Deep learning</li></ul>
+      </div>
+      <div class="row">
+        <div>
+          <h4>Peinture virtuelle</h4>
+          <p>On dessine à l'écran en bougeant la main devant la webcam : détection et suivi de la main en temps réel.</p>
+        </div>
+        <ul class="stack"><li>Python</li><li>OpenCV</li></ul>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3 class="g">Logiciel et réseaux</h3>
+      <div class="row">
+        <div>
+          <h4>Attestam</h4>
+          <p>Application web qui génère les certificats de scolarité et les reçus de paiement de l'ENSAM Rabat, utilisée en conditions réelles.</p>
+        </div>
+        <ul class="stack"><li>React</li><li>Supabase</li></ul>
+      </div>
+      <div class="row">
+        <div>
+          <h4>Gestion d'e-mails</h4>
+          <p>Application qui centralise le traitement et l'organisation des messages.</p>
+        </div>
+        <ul class="stack"><li>Java</li></ul>
+      </div>
+      <div class="row">
+        <div>
+          <h4>Réseau d'un supermarché intercommunal</h4>
+          <p>Conception et simulation d'une infrastructure LAN segmentée en VLAN, adaptée aux besoins du magasin.</p>
+        </div>
+        <ul class="stack"><li>Cisco Packet Tracer</li><li>VLAN</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PARCOURS ===================== -->
+  <section id="parcours" aria-labelledby="t-parcours">
+    <h2 id="t-parcours">Parcours</h2>
+    <p class="intro">Trois stages, trois façons de rendre des données et des outils utiles à une équipe.</p>
+    <ol class="xp" reversed>
+      <li>
+        <span class="when">Juillet – août 2026 · ENSAM Rabat</span>
+        <h4>Ingénierie des données et automatisation</h4>
+        <p>L'affectation de plus de 450 étudiants aux salles d'examen prenait plusieurs heures à la main. Je l'ai automatisée pour qu'elle prenne quelques minutes, avec rapports PDF et Excel, tests automatisés et un tableau de bord Power BI.</p>
+      </li>
+      <li>
+        <span class="when">Juin – juillet 2026 · MAMDA-MCMA</span>
+        <h4>Qualité des données</h4>
+        <p>Sur des données d'assurance réelles, j'ai conçu un pipeline de nettoyage automatisé qui détecte les anomalies, corrige ce qui peut l'être et atteint jusqu'à 95 % de fiabilité.</p>
+      </li>
+      <li>
+        <span class="when">Juillet – août 2025 · ENSAM Rabat</span>
+        <h4>Développement logiciel</h4>
+        <p>Développement d'Attestam, l'application de génération de documents administratifs de l'école.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===================== COMPÉTENCES ===================== -->
+  <section id="competences" aria-labelledby="t-competences">
+    <h2 id="t-competences">Compétences</h2>
+    <p class="intro">Les outils avec lesquels j'ai réellement construit quelque chose.</p>
+    <dl class="skills">
+      <dt>IA générative</dt><dd>LLM, RAG, systèmes multi-agents, LangChain, LangGraph, MCP, Ollama, Qdrant, ChromaDB, FAISS</dd>
+      <dt>Machine learning</dt><dd>Scikit-learn, PyTorch, TensorFlow, NLP, vision par ordinateur, OpenCV, MLflow</dd>
+      <dt>Données</dt><dd>Python, Pandas, NumPy, SQL, MySQL, PostgreSQL, Kafka, pipelines ETL</dd>
+      <dt>Visualisation</dt><dd>Power BI, Plotly, Matplotlib, Seaborn, Streamlit</dd>
+      <dt>Développement</dt><dd>Java, Spring Boot, FastAPI, Flask, React, Supabase, API REST, microservices</dd>
+      <dt>DevOps et réseaux</dt><dd>Docker, Git, GitHub Actions, Cisco Packet Tracer, VLAN</dd>
+    </dl>
+  </section>
+
+  <!-- ===================== À PROPOS ===================== -->
+  <section id="apropos" aria-labelledby="t-apropos">
+    <h2 id="t-apropos">En dehors du code</h2>
+    <div class="about">
+      <div>
+        <p>J'aime autant expliquer un système que le construire. Au club Fatal Error de l'ENSAM, je m'occupe de la communication et des relations avec les partenaires, et j'ai modéré un panel sur l'intelligence artificielle.</p>
+        <p>Avant cela, plusieurs années de Model United Nations m'ont appris à écouter, à négocier et à défendre une position en équipe.</p>
+        <p>Et depuis 2012, je joue du violon arabe et classique au conservatoire de Kénitra. La patience qu'il demande me sert aussi devant un bug.</p>
+      </div>
+      <div class="facts">
+        <p><b>Formation</b><br>Ingénieur d'État IA, Data Science et Santé Digitale, ENSAM Rabat (2022 – 2027)</p>
+        <p><b>Certifications</b><br>IBM RAG and Agentic AI<br>Strategic Communications in Technical Organizations (Johns Hopkins)</p>
+        <p><b>Langues</b><br>Arabe, français, anglais, espagnol (débutant)</p>
+        <p><b>Distinctions</b><br>Best Delegate, Best Diplomat et Best Speaker (MUN)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="contact" id="contact" aria-labelledby="t-contact">
+    <h2 id="t-contact">Je cherche mon stage de fin d'études</h2>
+    <p>Six mois à partir de janvier 2027, en data ou en intelligence artificielle. Si vous avez un sujet où des données doivent devenir des décisions, parlons-en.</p>
+    <div class="actions" style="display:flex;flex-wrap:wrap;gap:12px">
+      <a class="btn primary" href="mailto:r.rimbenamar@gmail.com">M'écrire</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/rim-benamar" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn ghost" id="gh" href="#" target="_blank" rel="noopener" hidden>GitHub</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Rim Benamar, Rabat</span>
+    <button class="theme" id="theme" type="button">Changer de thème</button>
+  </footer>
+</div>
+
+<script>
+  // Renseignez votre pseudo GitHub ici pour afficher le bouton GitHub (ex. "rimbenamar").
+  const GITHUB_USERNAME = "";
+  if (GITHUB_USERNAME) {
+    const gh = document.getElementById("gh");
+    gh.href = "https://github.com/" + GITHUB_USERNAME;
+    gh.hidden = false;
+  }
+
+  // Bascule clair / sombre, mémorisée pour ce navigateur.
+  const root = document.documentElement;
+  try { const saved = localStorage.getItem("theme"); if (saved) root.dataset.theme = saved; } catch (e) {}
+  document.getElementById("theme").addEventListener("click", () => {
+    const dark = root.dataset.theme
+      ? root.dataset.theme === "dark"
+      : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+  });
+</script>
+</body>
+</html>
